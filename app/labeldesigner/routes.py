@@ -37,7 +37,15 @@ def index():
                            default_font_family=current_app.config['LABEL_DEFAULT_FONT_FAMILY'],
                            line_spacings=LINE_SPACINGS,
                            default_line_spacing=current_app.config['LABEL_DEFAULT_LINE_SPACING'],
-                           default_dpi=DEFAULT_DPI
+                           default_dpi=DEFAULT_DPI,
+                           default_print_colour=current_app.config['LABEL_DEFAULT_PRINT_COLOUR'],
+                           default_font_style=current_app.config['LABEL_DEFAULT_FONT_STYLE'],
+                           default_font_alignment=current_app.config['LABEL_DEFAULT_FONT_ALIGNMENT'],
+                           #default_line_spacing=current_app.config['LABEL_DEFAULT_ERROR_CORRECTION'],
+                           default_margin_top=current_app.config['LABEL_DEFAULT_MARGIN_TOP'],
+                           default_margin_bottom=current_app.config['LABEL_DEFAULT_MARGIN_BOTTOM'],
+                           default_margin_left=current_app.config['LABEL_DEFAULT_MARGIN_LEFT'],
+                           default_margin_tight=current_app.config['LABEL_DEFAULT_MARGIN_RIGHT']
                            )
 
 

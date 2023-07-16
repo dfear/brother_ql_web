@@ -54,7 +54,7 @@ def index():
                            default_margin_top=current_app.config['LABEL_DEFAULT_MARGIN_TOP'],
                            default_margin_bottom=current_app.config['LABEL_DEFAULT_MARGIN_BOTTOM'],
                            default_margin_left=current_app.config['LABEL_DEFAULT_MARGIN_LEFT'],
-                           default_margin_tight=current_app.config['LABEL_DEFAULT_MARGIN_RIGHT']
+                           default_margin_right=current_app.config['LABEL_DEFAULT_MARGIN_RIGHT']
                            )
 
 

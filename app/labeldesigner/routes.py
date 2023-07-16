@@ -31,7 +31,7 @@ def index():
                            font_family_names=FONTS.fontlist(),
                            label_sizes=LABEL_SIZES,
                            default_label_size=current_app.config['LABEL_DEFAULT_SIZE'],
-                           default_font_size=current_app.config['LABEL_DEFAULT_SIZE'],
+                           default_font_size=current_app.config['LABEL_DEFAULT_FONT_SIZE'],
                            default_orientation=current_app.config['LABEL_DEFAULT_ORIENTATION'],
                            default_qr_size=current_app.config['LABEL_DEFAULT_QR_SIZE'],
                            default_font_family=current_app.config['LABEL_DEFAULT_FONT_FAMILY'],
@@ -45,7 +45,7 @@ def index():
                            default_margin_top=current_app.config['LABEL_DEFAULT_MARGIN_TOP'],
                            default_margin_bottom=current_app.config['LABEL_DEFAULT_MARGIN_BOTTOM'],
                            default_margin_left=current_app.config['LABEL_DEFAULT_MARGIN_LEFT'],
-                           default_margin_tight=current_app.config['LABEL_DEFAULT_MARGIN_RIGHT']
+                           default_margin_right=current_app.config['LABEL_DEFAULT_MARGIN_RIGHT']
                            )
 
 

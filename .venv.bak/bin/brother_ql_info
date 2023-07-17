@@ -1,0 +1,10 @@
+#!/bin/sh
+'''exec' "/home/dfear/Projects/software/other projects/brother_ql_web/.venv/bin/python3" "$0" "$@"
+' '''
+# -*- coding: utf-8 -*-
+import re
+import sys
+from brother_ql.brother_ql_info import main
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.exit(main())

@@ -201,6 +201,7 @@ class SimpleLabel:
         img = Image.new('L', (20, 20), 'white')
         draw = ImageDraw.Draw(img)
         return draw.multiline_textbbox(
+            (0,0),
             self._prepare_text(self._text),
             font=font,
             spacing=int(self._font_size*((self._line_spacing - 100) / 100)))

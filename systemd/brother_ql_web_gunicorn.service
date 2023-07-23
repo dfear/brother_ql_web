@@ -1,0 +1,15 @@
+[Unit]
+Description=Brother QL Web
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+Type=simple
+WorkingDirectory=/opt/brother_ql_web
+Environment="PATH=/opt/brother_ql_web/.venv/bin"
+ExecStart=/opt/brother_ql_web/.venv/bin/gunicorn --workers 3 --bind 0.0.0.0:5000 -m 007 wsgi:app
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -200,13 +200,21 @@ class SimpleLabel:
         font = self._get_font()
         img = Image.new('L', (20, 20), 'white')
         draw = ImageDraw.Draw(img)
-        return draw.multiline_textbbox(
+"""         return draw.multiline_textbbox(
             (95,25),
             self._prepare_text(self._text),
             font=font,
-            spacing=int(self._font_size*((self._line_spacing - 100) / 100)))
+            spacing=int(self._font_size*((self._line_spacing - 100) / 100))) """
         
+        return draw.multiline_textbbox(
+            (0,0),
+            self._prepare_text(self._text),
+            font=font,
+            align="left",
+            spacing=int(self._font_size*((self._line_spacing - 100) / 100)))
+
         #draw.multiline_textbbox((0, 0), txt, font=mono_font, align="left")
+        #draw.multiliwn_textbbox((0,0), txt,font=mono_font, align="left", spacing)
 
     @staticmethod
     def _prepare_text(text):

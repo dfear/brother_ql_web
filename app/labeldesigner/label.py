@@ -210,7 +210,7 @@ class SimpleLabel:
             (130,160),
             self._prepare_text(self._text),
             font=font,
-            align="left",
+            align=self._text_align,
             spacing=int(self._font_size*((self._line_spacing - 100) / 100)))
 
         #draw.multiline_textbbox((0, 0), txt, font=mono_font, align="left")

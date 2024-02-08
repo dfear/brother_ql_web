@@ -127,7 +127,7 @@ class SimpleLabel:
         if self._label_content == LabelContent.TEXT_ONLY:
             textsize = self._get_text_size()
         elif self._label_content == LabelContent.TEXT_QRCODE:
-            textsize = (120, 30)
+            textsize = (110, 30)
         else:
             textsize = (0, 0)
 

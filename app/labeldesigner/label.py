@@ -124,7 +124,7 @@ class SimpleLabel:
         else:
             img_width, img_height = (0, 0)
 
-        if self._label_content in (LabelContent.TEXT_ONLY, LabelContent.TEXT_QRCODE):
+        if self._label_content in (LabelContent.TEXT_ONLY):
             textsize = self._get_text_size()
         else:
             textsize = (0, 0)

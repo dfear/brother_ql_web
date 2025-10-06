@@ -2,11 +2,11 @@ import os
 
 from flask import current_app, render_template, request, make_response
 
-from brother_ql.devicedependent import label_type_specs, label_sizes
+from brother_ql.devicedependent import label_type_specs, label_sizes, two_color_support
 from brother_ql.devicedependent import ENDLESS_LABEL, DIE_CUT_LABEL, ROUND_DIE_CUT_LABEL
 
 from . import bp
-from app.utils import convert_image_to_bw, pdffile_to_image, imgfile_to_image, image_to_png_bytes
+from app.utils import convert_image_to_bw, convert_image_to_grayscale, pdffile_to_image, imgfile_to_image, image_to_png_bytes
 from app import FONTS
 
 from .label import SimpleLabel, LabelContent, LabelOrientation, LabelType
@@ -27,21 +27,21 @@ LABEL_SIZES = [(
 
 @bp.route('/')
 def index():
+    RED_SUPPORT = current_app.config['PRINTER_MODEL'] in two_color_support
     return render_template('labeldesigner.html',
                            font_family_names=FONTS.fontlist(),
                            label_sizes=LABEL_SIZES,
+                           red_support=RED_SUPPORT,
                            default_label_size=current_app.config['LABEL_DEFAULT_SIZE'],
                            default_font_size=current_app.config['LABEL_DEFAULT_FONT_SIZE'],
                            default_orientation=current_app.config['LABEL_DEFAULT_ORIENTATION'],
                            default_qr_size=current_app.config['LABEL_DEFAULT_QR_SIZE'],
+                           default_image_mode=current_app.config['IMAGE_DEFAULT_MODE'],
+                           default_bw_threshold=current_app.config['IMAGE_DEFAULT_BW_THRESHOLD'],
                            default_font_family=current_app.config['LABEL_DEFAULT_FONT_FAMILY'],
                            line_spacings=LINE_SPACINGS,
                            default_line_spacing=current_app.config['LABEL_DEFAULT_LINE_SPACING'],
                            default_dpi=DEFAULT_DPI,
-                           default_print_colour=current_app.config['LABEL_DEFAULT_PRINT_COLOUR'],
-                           default_font_style=current_app.config['LABEL_DEFAULT_FONT_STYLE'],
-                           default_font_alignment=current_app.config['LABEL_DEFAULT_FONT_ALIGNMENT'],
-                           #default_line_spacing=current_app.config['LABEL_DEFAULT_ERROR_CORRECTION'],
                            default_margin_top=current_app.config['LABEL_DEFAULT_MARGIN_TOP'],
                            default_margin_bottom=current_app.config['LABEL_DEFAULT_MARGIN_BOTTOM'],
                            default_margin_left=current_app.config['LABEL_DEFAULT_MARGIN_LEFT'],
@@ -138,6 +138,8 @@ def create_label_from_request(request):
         'align': d.get('align', 'center'),
         'qrcode_size': int(d.get('qrcode_size', 10)),
         'qrcode_correction': d.get('qrcode_correction', 'L'),
+        'image_mode': d.get('image_mode', "grayscale"),
+        'image_bw_threshold': int(d.get('image_bw_threshold', 70)),
         'font_size': int(d.get('font_size', 100)),
         'line_spacing': int(d.get('line_spacing', 100)),
         'font_family': d.get('font_family'),
@@ -167,10 +169,16 @@ def create_label_from_request(request):
             name, ext = os.path.splitext(image.filename)
             if ext.lower() in ('.png', '.jpg', '.jpeg'):
                 image = imgfile_to_image(image)
-                return convert_image_to_bw(image, 200)
+                if context['image_mode'] == 'grayscale':
+                    return convert_image_to_grayscale(image)
+                else:
+                    return convert_image_to_bw(image, context['image_bw_threshold'])
             elif ext.lower() in ('.pdf'):
                 image = pdffile_to_image(image, DEFAULT_DPI)
-                return convert_image_to_bw(image, 200)
+                if context['image_mode'] == 'grayscale':
+                    return convert_image_to_grayscale(image)
+                else:
+                    return convert_image_to_bw(image, context['image_bw_threshold'])
             else:
                 return None
         except AttributeError:
@@ -182,8 +190,10 @@ def create_label_from_request(request):
         label_content = LabelContent.QRCODE_ONLY
     elif context['print_type'] == 'qrcode_text':
         label_content = LabelContent.TEXT_QRCODE
+    elif context['image_mode'] == 'grayscale':
+        label_content = LabelContent.IMAGE_GRAYSCALE
     else:
-        label_content = LabelContent.IMAGE
+        label_content = LabelContent.IMAGE_BW
 
     if context['label_orientation'] == 'rotated':
         label_orientation = LabelOrientation.ROTATED

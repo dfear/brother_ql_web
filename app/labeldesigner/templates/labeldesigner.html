@@ -31,6 +31,7 @@
                                 </label>
                             </div>
 
+                            {% if red_support %}
                             <label for="printColor" class="control-label input-group" style="margin-top: 10px; margin-bottom: 0">Print Color:</label>
                             <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
                                 <label class="btn btn-dark" id="print_color_black">
@@ -40,6 +41,7 @@
                                     <input type="radio" name="printColor" onchange="preview()" value="red" aria-label="Red">Red
                                 </label>
                             </div>
+                            {% endif %}
 
                         </div>
                         <!-- class="card-body" -->
@@ -113,6 +115,33 @@
                                 <option value="Q">About 25% can be corrected.</option>
                                 <option value="H">About 30% can be corrected.</option>
                             </select>
+                        </div>
+                        <!-- class="card-body" -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" id="heading5">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="true" aria-controls="collapse5">
+                            <span class="fas fa-image" aria-hidden="true"></span> Image Settings
+                        </button>
+                    </div>
+                    <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordion">
+                        <div class="card-body">
+                            <label for="imageMode" class="control-label input-group" style="margin-top: 10px; margin-bottom: 0">Image mode:</label>
+                            <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                                <label class="btn btn-secondary {% if default_image_mode == 'black_and_white' %}active{% endif %}" id="image_mode_bw">
+                                    <input type="radio" name="imageMode" onchange="preview()" value="black_and_white" aria-label="Black & White" {% if default_image_mode == 'black_and_white' %}checked{% endif %}>
+                                    <span class="fas fa-ruler-horizontal" aria-hidden="true"> Black & White
+                                </label>
+                                <label class="btn btn-secondary {% if default_image_mode == 'grayscale' %}active{% endif %}" id="image_mode_grayscale">
+                                    <input type="radio" name="imageMode" onchange="preview()" value="grayscale" aria-label="Grayscale" {% if default_image_mode == 'grayscale' %}checked{% endif %}>
+                                    <span class="fas fa-ruler-vertical" aria-hidden="true"> Grayscale
+                                </label>
+                            </div>
+
+                            <label for="imageBwThreshold" style="margin-top: 10px; margin-bottom: 0">Black & White threshold:</label>
+                            <input id="imageBwThreshold" class="form-control" type="number" min="1" max="255" value="{{default_bw_threshold}}" onChange="preview()">
                         </div>
                         <!-- class="card-body" -->
                     </div>

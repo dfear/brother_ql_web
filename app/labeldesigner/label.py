@@ -126,10 +126,8 @@ class SimpleLabel:
         else:
             img_width, img_height = (0, 0)
 
-        if self._label_content == LabelContent.TEXT_ONLY:
+        if self._label_content in (LabelContent.TEXT_ONLY, LabelContent.TEXT_QRCODE):
             textsize = self._get_text_size()
-        elif self._label_content == LabelContent.TEXT_QRCODE:
-            textsize = (110, 30)
         else:
             textsize = (0, 0, 0, 0)
 
@@ -204,21 +202,12 @@ class SimpleLabel:
         font = self._get_font()
         img = Image.new('L', (20, 20), 'white')
         draw = ImageDraw.Draw(img)
-        """         return draw.multiline_textbbox(
-                    (95,25),
-                    self._prepare_text(self._text),
-                    font=font,
-                    spacing=int(self._font_size*((self._line_spacing - 100) / 100))) """
-        
         return draw.multiline_textbbox(
-            (130,160),
+            (0, 0),
             self._prepare_text(self._text),
             font=font,
             align=self._text_align,
             spacing=int(self._font_size*((self._line_spacing - 100) / 100)))
-
-        #draw.multiline_textbbox((0, 0), txt, font=mono_font, align="left")
-        #draw.multiliwn_textbbox((0,0), txt,font=mono_font, align="left", spacing)
 
     @staticmethod
     def _prepare_text(text):

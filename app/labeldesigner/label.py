@@ -7,7 +7,8 @@ class LabelContent(Enum):
     TEXT_ONLY = auto()
     QRCODE_ONLY = auto()
     TEXT_QRCODE = auto()
-    IMAGE = auto()
+    IMAGE_BW = auto()
+    IMAGE_GRAYSCALE = auto()
 
 
 class LabelOrientation(Enum):
@@ -48,6 +49,7 @@ class SimpleLabel:
             text_align=TextAlign.CENTER,
             qr_size=10,
             qr_correction='L',
+            image_mode='grayscale',
             image=None,
             font_path='',
             font_size=70,
@@ -114,7 +116,7 @@ class SimpleLabel:
     def generate(self):
         if self._label_content in (LabelContent.QRCODE_ONLY, LabelContent.TEXT_QRCODE):
             img = self._generate_qr()
-        elif self._label_content == LabelContent.IMAGE:
+        elif self._label_content in (LabelContent.IMAGE_BW, LabelContent.IMAGE_GRAYSCALE):
             img = self._image
         else:
             img = None
@@ -127,45 +129,45 @@ class SimpleLabel:
         if self._label_content in (LabelContent.TEXT_ONLY, LabelContent.TEXT_QRCODE):
             textsize = self._get_text_size()
         else:
-            textsize = (0, 0)
+            textsize = (0, 0, 0, 0)
 
         width, height = self._width, self._height
         margin_left, margin_right, margin_top, margin_bottom = self._label_margin
 
         if self._label_orientation == LabelOrientation.STANDARD:
             if self._label_type in (LabelType.ENDLESS_LABEL,):
-                height = img_height + textsize[1] + margin_top + margin_bottom
+                height = img_height + textsize[3] - textsize[1] + margin_top + margin_bottom
         elif self._label_orientation == LabelOrientation.ROTATED:
             if self._label_type in (LabelType.ENDLESS_LABEL,):
-                width = img_width + textsize[0] + margin_left + margin_right
+                width = img_width + textsize[2] + margin_left + margin_right
 
         if self._label_orientation == LabelOrientation.STANDARD:
             if self._label_type in (LabelType.DIE_CUT_LABEL, LabelType.ROUND_DIE_CUT_LABEL):
-                vertical_offset_text = (height - img_height - textsize[1])//2
+                vertical_offset_text = (height - img_height - textsize[3])//2
                 vertical_offset_text += (margin_top - margin_bottom)//2
             else:
                 vertical_offset_text = margin_top
 
             vertical_offset_text += img_height
-            horizontal_offset_text = max((width - textsize[0])//2, 0)
+            horizontal_offset_text = max((width - textsize[2])//2, 0)
             horizontal_offset_image = (width - img_width)//2
             vertical_offset_image = margin_top
 
         elif self._label_orientation == LabelOrientation.ROTATED:
-            vertical_offset_text = (height - textsize[1])//2
+            vertical_offset_text = (height - textsize[3])//2
             vertical_offset_text += (margin_top - margin_bottom)//2
             if self._label_type in (LabelType.DIE_CUT_LABEL, LabelType.ROUND_DIE_CUT_LABEL):
-                horizontal_offset_text = max((width - img_width - textsize[0])//2, 0)
+                horizontal_offset_text = max((width - img_width - textsize[2])//2, 0)
             else:
                 horizontal_offset_text = margin_left
             horizontal_offset_text += img_width
             horizontal_offset_image = margin_left
             vertical_offset_image = (height - img_height)//2
 
-        text_offset = horizontal_offset_text, vertical_offset_text
+        text_offset = horizontal_offset_text, vertical_offset_text - textsize[1]
         image_offset = horizontal_offset_image, vertical_offset_image
 
-        imgResult = Image.new('RGB', (width, height), 'white')
+        imgResult = Image.new('RGB', (int(width), int(height)), 'white')
 
         if img is not None:
             imgResult.paste(img, image_offset)
@@ -189,7 +191,7 @@ class SimpleLabel:
             box_size=self._qr_size,
             border=0,
         )
-        qr.add_data(self._text)
+        qr.add_data(self._text.encode("utf-8-sig"))
         qr.make(fit=True)
         qr_img = qr.make_image(
             fill_color='red' if (255, 0, 0) == self._fore_color else 'black',
@@ -200,9 +202,11 @@ class SimpleLabel:
         font = self._get_font()
         img = Image.new('L', (20, 20), 'white')
         draw = ImageDraw.Draw(img)
-        return draw.multiline_textsize(
+        return draw.multiline_textbbox(
+            (0, 0),
             self._prepare_text(self._text),
             font=font,
+            align=self._text_align,
             spacing=int(self._font_size*((self._line_spacing - 100) / 100)))
 
     @staticmethod

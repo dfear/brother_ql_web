@@ -82,6 +82,42 @@ All in all, the web server offers:
 * an API at `/api/print/text?text=Your_Text&font_size=100&font_family=Minion%20Pro%20(%20Semibold%20)`
   to print a label containing 'Your Text' with the specified font properties.
 
+### API Example (python)
+
+    #!/usr/bin/python3
+    import requests
+
+    # Print a simple text label
+    url = "http://brother_ql_printer.lan:5000/labeldesigner/api/print"
+    params = {
+        'text': 'API\ntest',
+        'font_family': 'Liberation Mono',
+        'font_style':  'Regular',
+        'font_size':   43, # use 37 for 'qrcode_text'
+        'label_size':  '23x23',
+        'align':       'center',
+        'orientation': 'standard',
+        'margin_top':    20,
+        'margin_bottom': 20,
+        'margin_left':   20,
+        'margin_right':  20,
+        'print_type':    'text', # valid values: 'text', 'qrcode', 'qrcode_text' and 'image'.
+        'qrcode_size':   6,
+        'qrcode_correction': 'L',
+        'image_bw_threshold': 70,
+        'image_mode': 'grayscale',
+        'print_count': 1,
+        'line_spacing': 100,
+        'cut_once': 0
+    }
+
+    response = requests.get(url, params=params)
+
+    if response.status_code == 200:
+        print(response.json())
+    else:
+        print(f"Error {response.status_code}: {response.text}")
+
 ### License
 
 This software is published under the terms of the GPLv3, see the LICENSE file in the repository.

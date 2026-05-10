@@ -147,42 +147,42 @@ def create_label_from_request(request):
         'print_color': d.get('print_color', 'black'),
     }
 
-    def get_label_dimensions(label_size):
-        try:
-            ls = label_type_specs[context['label_size']]
-        except KeyError:
-            raise LookupError("Unknown label_size")
-        return ls['dots_printable']
+def get_label_dimensions(label_size):
+    try:
+        ls = label_type_specs[context['label_size']]
+    except KeyError:
+        raise LookupError("Unknown label_size")
+    return ls['dots_printable']
 
-    def get_font_path(font_family_name, font_style_name):
-        try:
-            if font_family_name is None or font_style_name is None:
-                font_family_name = current_app.config['LABEL_DEFAULT_FONT_FAMILY']
-                font_style_name = current_app.config['LABEL_DEFAULT_FONT_STYLE']
-            font_path = FONTS.fonts[font_family_name][font_style_name]
-        except KeyError:
-            raise LookupError("Couln't find the font & style")
-        return font_path
+def get_font_path(font_family_name, font_style_name):
+    try:
+        if font_family_name is None or font_style_name is None:
+            font_family_name = current_app.config['LABEL_DEFAULT_FONT_FAMILY']
+            font_style_name = current_app.config['LABEL_DEFAULT_FONT_STYLE']
+        font_path = FONTS.fonts[font_family_name][font_style_name]
+    except KeyError:
+        raise LookupError("Couln't find the font & style")
+    return font_path
 
-    def get_uploaded_image(image):
-        try:
-            name, ext = os.path.splitext(image.filename)
-            if ext.lower() in ('.png', '.jpg', '.jpeg'):
-                image = imgfile_to_image(image)
-                if context['image_mode'] == 'grayscale':
-                    return convert_image_to_grayscale(image)
-                else:
-                    return convert_image_to_bw(image, context['image_bw_threshold'])
-            elif ext.lower() in ('.pdf'):
-                image = pdffile_to_image(image, DEFAULT_DPI)
-                if context['image_mode'] == 'grayscale':
-                    return convert_image_to_grayscale(image)
-                else:
-                    return convert_image_to_bw(image, context['image_bw_threshold'])
+def get_uploaded_image(image):
+    try:
+        name, ext = os.path.splitext(image.filename)
+        if ext.lower() in ('.png', '.jpg', '.jpeg'):
+            image = imgfile_to_image(image)
+            if context['image_mode'] == 'grayscale':
+                return convert_image_to_grayscale(image)
             else:
-                return None
-        except AttributeError:
+                return convert_image_to_bw(image, context['image_bw_threshold'])
+        elif ext.lower() in ('.pdf'):
+            image = pdffile_to_image(image, DEFAULT_DPI)
+            if context['image_mode'] == 'grayscale':
+                return convert_image_to_grayscale(image)
+            else:
+                return convert_image_to_bw(image, context['image_bw_threshold'])
+        else:
             return None
+    except AttributeError:
+        return None
 
     if context['print_type'] == 'text':
         label_content = LabelContent.TEXT_ONLY

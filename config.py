@@ -19,6 +19,7 @@ class Config(object):
     PRINTER_PRINTER = 'file:///dev/usb/lp1'
 
     LABEL_DEFAULT_ORIENTATION = 'standard'
+    LABEL_DEFAULT_SHAPE = '' # VALID values: RECT, SQUARE.
     LABEL_DEFAULT_SIZE = '62'
     LABEL_DEFAULT_FONT_SIZE = 70
     LABEL_DEFAULT_QR_SIZE = 10

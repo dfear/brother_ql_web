@@ -63,7 +63,7 @@ function updateStyles() {
 }
 
 function toggleLabelText() {
-    const isChecked = $('#toggleLabelText').is(':checked');
+    const isChecked = $('#toggleLabelTextCheckbox').is(':checked');
     if (isChecked) {
         console.log("is checked");
         $('#labelText').prop('disabled', true);
@@ -73,6 +73,7 @@ function toggleLabelText() {
         $('#labelText').prop('disabled', false);
         return false;
     }
+    preview();
 }
 
 function preview() {

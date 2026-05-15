@@ -142,7 +142,7 @@ class SimpleLabel:
                 width = img_width + textsize[2] + margin_left + margin_right
 
         if self._label_orientation == LabelOrientation.STANDARD:
-            if self._label_type in (LabelType.DIE_CUT_LABEL, LabelType.ROUND_DIE_CUT_LABEL):
+            """ if self._label_type in (LabelType.DIE_CUT_LABEL, LabelType.ROUND_DIE_CUT_LABEL):
                 vertical_offset_text = (height - img_height - textsize[3])//2
                 vertical_offset_text += (margin_top - margin_bottom)//2
             else:
@@ -151,9 +151,8 @@ class SimpleLabel:
             vertical_offset_text += img_height
             horizontal_offset_text = max((width - textsize[2])//2, 0)
             horizontal_offset_image = (width - img_width)//2
-            vertical_offset_image = margin_top
+            vertical_offset_image = margin_top """
 
-        elif self._label_orientation == LabelOrientation.ROTATED:
             vertical_offset_text = (height - textsize[3])//2
             vertical_offset_text += (margin_top - margin_bottom)//2
             if self._label_type in (LabelType.DIE_CUT_LABEL, LabelType.ROUND_DIE_CUT_LABEL):
@@ -163,6 +162,28 @@ class SimpleLabel:
             horizontal_offset_text += img_width
             horizontal_offset_image = margin_left
             vertical_offset_image = (height - img_height)//2
+
+        elif self._label_orientation == LabelOrientation.ROTATED:
+            """ vertical_offset_text = (height - textsize[3])//2
+            vertical_offset_text += (margin_top - margin_bottom)//2
+            if self._label_type in (LabelType.DIE_CUT_LABEL, LabelType.ROUND_DIE_CUT_LABEL):
+                horizontal_offset_text = max((width - img_width - textsize[2])//2, 0)
+            else:
+                horizontal_offset_text = margin_left
+            horizontal_offset_text += img_width
+            horizontal_offset_image = margin_left
+            vertical_offset_image = (height - img_height)//2 """
+
+            if self._label_type in (LabelType.DIE_CUT_LABEL, LabelType.ROUND_DIE_CUT_LABEL):
+                vertical_offset_text = (height - img_height - textsize[3])//2
+                vertical_offset_text += (margin_top - margin_bottom)//2
+            else:
+                vertical_offset_text = margin_top
+
+            vertical_offset_text += img_height
+            horizontal_offset_text = max((width - textsize[2])//2, 0)
+            horizontal_offset_image = (width - img_width)//2
+            vertical_offset_image = margin_to
 
         text_offset = horizontal_offset_text, vertical_offset_text - textsize[1]
         image_offset = horizontal_offset_image, vertical_offset_image

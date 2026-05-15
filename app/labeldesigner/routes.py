@@ -134,6 +134,7 @@ def create_label_from_request(request):
         'margin_bottom': float(d.get('margin_bottom', 45))/100.,
         'margin_left': float(d.get('margin_left', 35))/100.,
         'margin_right': float(d.get('margin_right', 35))/100.,
+        'qrtext': d.get('qrtext', None),
         'text': d.get('text', None),
         'align': d.get('align', 'center'),
         'qrcode_size': int(d.get('qrcode_size', 10)),
@@ -228,6 +229,7 @@ def create_label_from_request(request):
         fore_color=
             (255, 0, 0) if 'red' in context['label_size'] and context['print_color'] == 'red'
             else (0, 0, 0),
+        qrtext=context['qrtext'],
         text=context['text'],
         text_align=context['align'],
         qr_size=context['qrcode_size'],

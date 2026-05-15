@@ -62,6 +62,27 @@ function updateStyles() {
     });
 }
 
+function toggleLabelText() {
+    const el = document.getElementById("toggleLabelText");
+    if (
+        el
+        && el.type === "checkbox"
+        && $('#toggleLabelText').is(':checked')
+        //$('#toggleLabelText').is(':checked')
+    ) {
+        console.log("is checked");
+        $('#labelText').setAttribute('disabled', 'disabled');
+        return true;
+    }
+    console.log("is not checked");
+    $('#labelText').removeAttribute('disabled');
+    return false;
+
+    //$('#labelText').setAttribute('disabled', 'disabled');
+
+    //$('#labelText').removeAttribute('disabled');
+}
+
 function preview() {
     if ($('#labelSize option:selected').data('round') == 'True') {
         $('img#previewImg').addClass('roundPreviewImage');

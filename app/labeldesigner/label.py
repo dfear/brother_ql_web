@@ -183,7 +183,7 @@ class SimpleLabel:
             vertical_offset_text += img_height
             horizontal_offset_text = max((width - textsize[2])//2, 0)
             horizontal_offset_image = (width - img_width)//2
-            vertical_offset_image = margin_to
+            vertical_offset_image = margin_top
 
         text_offset = horizontal_offset_text, vertical_offset_text - textsize[1]
         image_offset = horizontal_offset_image, vertical_offset_image

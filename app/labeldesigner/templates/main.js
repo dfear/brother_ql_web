@@ -1,8 +1,11 @@
 function formData(cut_once) {
     var text = $('#labelText').val();
     if (text == '') text = ' ';
+    var qrtext = $('#labelQRCodeText').val();
+     if (qrtext == '') qrtext = ' ';
     return {
         text:        text,
+        qrtext:      qrtext,
         font_family: $('#fontFamily option:selected').text(),
         font_style:  $('#fontStyle option:selected').text(),
         font_size:   $('#fontSize').val(),

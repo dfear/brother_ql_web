@@ -63,24 +63,16 @@ function updateStyles() {
 }
 
 function toggleLabelText() {
-    const el = document.getElementById("toggleLabelText");
-    if (
-        el
-        && el.type === "checkbox"
-        && $('#toggleLabelText').is(':checked')
-        //$('#toggleLabelText').is(':checked')
-    ) {
+    const isChecked = $('#toggleLabelText').is(':checked');
+    if (isChecked) {
         console.log("is checked");
-        $('#labelText').setAttribute('disabled', 'disabled');
+        $('#labelText').prop('disabled', true);
         return true;
+    } else {
+        console.log("is not checked");
+        $('#labelText').prop('disabled', false);
+        return false;
     }
-    console.log("is not checked");
-    $('#labelText').removeAttribute('disabled');
-    return false;
-
-    //$('#labelText').setAttribute('disabled', 'disabled');
-
-    //$('#labelText').removeAttribute('disabled');
 }
 
 function preview() {

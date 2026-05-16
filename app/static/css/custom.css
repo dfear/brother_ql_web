@@ -28,10 +28,20 @@ label {
     margin-bottom: 20px;
 }
 
-/* Custom Switch polyfill for older Bootstrap 4 versions */
-.custom-switch {
-  padding-left: 2.25rem;
+#toggleLabelText {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 2.25rem;
 }
+
+/* Custom Switch polyfill for older Bootstrap 4 versions */
+.custom-control {
+  padding-left: 0.5rem;
+}
+
+/* .custom-switch {
+  padding-left: 2.25rem;
+} */
 
 .custom-switch .custom-control-label::before {
   left: -2.25rem;

@@ -216,10 +216,10 @@
             <textarea rows="3" id="labelQRCodeText" class="form-control" onChange="preview()" onInput="preview()"></textarea>
         </fieldset>
 
-        <label class="btn btn-secondary" id="toggleLabelText">
-            <input type="checkbox" id="toggleLabelTextCheckbox" name="toggleLabelText" onchange="toggleLabelText()" value="toggleLabelText" aria-label="toggleLabelText">
-            <span class="fas fa-solid fa-toggle-off" aria-hidden="true"></span><br>Sync Text
-        </label>
+        <div class="form-check form-switch" id="toggleLabelText">
+            <input class="form-check-input" type="checkbox" role="switch" id="toggleLabelTextCheckbox" name="toggleLabelText" onchange="toggleLabelText()" value="toggleLabelText" aria-label="toggleLabelText">
+            <label class="form-check-label" for="toggleLabelTextCheckbox">Sync QRCode Text to Label Text</label>
+        </div>
 
         <fieldset class="form-group" id="groupLabelText">
             <label for="labelText" style="margin-top: 10px; margin-bottom: 0">Label Text:</label>

@@ -35,6 +35,7 @@ def index():
                            default_label_size=current_app.config['LABEL_DEFAULT_SIZE'],
                            default_font_size=current_app.config['LABEL_DEFAULT_FONT_SIZE'],
                            default_orientation=current_app.config['LABEL_DEFAULT_ORIENTATION'],
+                           default_font_alignment=current_app.config.get('LABEL_DEFAULT_FONT_ALIGNMENT', 'Left').lower(),
                            default_qr_size=current_app.config['LABEL_DEFAULT_QR_SIZE'],
                            default_image_mode=current_app.config['IMAGE_DEFAULT_MODE'],
                            default_bw_threshold=current_app.config['IMAGE_DEFAULT_BW_THRESHOLD'],

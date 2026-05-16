@@ -90,6 +90,7 @@ All in all, the web server offers:
     # Print a simple text label
     url = "http://brother_ql_printer.lan:5000/labeldesigner/api/print"
     params = {
+        'qrtext': 'API\nqrtest',
         'text': 'API\ntest',
         'font_family': 'Liberation Mono',
         'font_style':  'Regular',

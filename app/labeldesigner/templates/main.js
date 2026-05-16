@@ -74,11 +74,9 @@ function toggleLabelText() {
     if (isChecked) {
         console.log("is checked");
         $('#labelText').prop('disabled', true);
-        return true;
     } else {
         console.log("is not checked");
         $('#labelText').prop('disabled', false);
-        return false;
     }
     preview();
 }

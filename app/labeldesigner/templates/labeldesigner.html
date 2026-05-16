@@ -216,9 +216,9 @@
             <textarea rows="3" id="labelQRCodeText" class="form-control" onChange="preview()" onInput="preview()"></textarea>
         </fieldset>
 
-        <div class="form-check form-switch" id="toggleLabelText">
-            <input class="form-check-input" type="checkbox" role="switch" id="toggleLabelTextCheckbox" name="toggleLabelText" onchange="toggleLabelText()" value="toggleLabelText" aria-label="toggleLabelText">
-            <label class="form-check-label" for="toggleLabelTextCheckbox">Sync QRCode Text to Label Text</label>
+        <div class="custom-control custom-switch" id="toggleLabelText" style="margin-top: 10px;">
+            <input type="checkbox" class="custom-control-input" id="toggleLabelTextCheckbox" name="toggleLabelText" onchange="toggleLabelText()" value="toggleLabelText">
+            <label class="custom-control-label" for="toggleLabelTextCheckbox">Sync QRCode Text to Label Text</label>
         </div>
 
         <fieldset class="form-group" id="groupLabelText">

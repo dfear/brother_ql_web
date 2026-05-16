@@ -2,7 +2,14 @@ function formData(cut_once) {
     var text = $('#labelText').val();
     if (text == '') text = ' ';
     var qrtext = $('#labelQRCodeText').val();
-     if (qrtext == '') qrtext = ' ';
+    if (qrtext == '') qrtext = ' ';
+
+    const isChecked = $('#toggleLabelTextCheckbox').is(':checked');
+    if (isChecked) {
+        console.log("formData() isChecked is True,")
+        text = qrtext;
+    }
+
     return {
         text:        text,
         qrtext:      qrtext,

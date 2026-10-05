@@ -49,7 +49,6 @@ def index():
                            default_margin_right=current_app.config['LABEL_DEFAULT_MARGIN_RIGHT']
                            )
 
-
 @bp.route('/upload')
 def upload():
     RED_SUPPORT = current_app.config['PRINTER_MODEL'] in two_color_support

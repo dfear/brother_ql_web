@@ -247,97 +247,94 @@
             </div>
         </fieldset>
     </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="col-md-4">
-                <label for="printType" class="control-label input-group" style="margin-bottom: 0">Print Type:</label>
-                <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
-                    <label class="btn btn-secondary active" id="printTypeText">
-                        <input type="radio" name="printType" onchange="preview()" value="text" aria-label="Text"
-                            checked>
-                        <span class="fas fa-font" aria-hidden="true"></span><br>Text
-                    </label>
-                    <label class="btn btn-secondary" id="printTypeQrCode">
-                        <input type="radio" name="printType" onchange="preview()" value="qrcode" aria-label="Text">
-                        <span class="fas fa-qrcode" aria-hidden="true"></span><br>QR Code
-                    </label>
-                    <label class="btn btn-secondary" id="printTypeQrCodeText">
-                        <input type="radio" name="printType" onchange="preview()" value="qrcode_text"
-                            aria-label="QR Code + Text">
-                        <span class="fas fa-qrcode" aria-hidden="true"></span><br>QR Code+Text
-                    </label>
-                    <label class="btn btn-secondary" id="printTypeImage">
-                        <input type="radio" name="printType" onchange="preview()" value="image" aria-label="Image">
-                        <span class="fas fa-image" aria-hidden="true"></span><br>Image
-                    </label>
-                </div>
+    <!-- <div class="row"> -->
+    <!-- <div class="col-md-4"> -->
+    <div class="col-md-4">
+        <label for="printType" class="control-label input-group" style="margin-bottom: 0">Print Type:</label>
+        <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+            <label class="btn btn-secondary active" id="printTypeText">
+                <input type="radio" name="printType" onchange="preview()" value="text" aria-label="Text" checked>
+                <span class="fas fa-font" aria-hidden="true"></span><br>Text
+            </label>
+            <label class="btn btn-secondary" id="printTypeQrCode">
+                <input type="radio" name="printType" onchange="preview()" value="qrcode" aria-label="Text">
+                <span class="fas fa-qrcode" aria-hidden="true"></span><br>QR Code
+            </label>
+            <label class="btn btn-secondary" id="printTypeQrCodeText">
+                <input type="radio" name="printType" onchange="preview()" value="qrcode_text"
+                    aria-label="QR Code + Text">
+                <span class="fas fa-qrcode" aria-hidden="true"></span><br>QR Code+Text
+            </label>
+            <label class="btn btn-secondary" id="printTypeImage">
+                <input type="radio" name="printType" onchange="preview()" value="image" aria-label="Image">
+                <span class="fas fa-image" aria-hidden="true"></span><br>Image
+            </label>
+        </div>
 
-                <fieldset class="form-group" id="groupLabelQRCodeText">
-                    <label for="labelQRCodeText" style="margin-top: 10px; margin-bottom: 0">Label QRCode Text:</label>
-                    <textarea rows="3" id="labelQRCodeText" class="form-control" onChange="preview()"
-                        onInput="preview()"></textarea>
-                </fieldset>
+        <fieldset class="form-group" id="groupLabelQRCodeText">
+            <label for="labelQRCodeText" style="margin-top: 10px; margin-bottom: 0">Label QRCode Text:</label>
+            <textarea rows="3" id="labelQRCodeText" class="form-control" onChange="preview()"
+                onInput="preview()"></textarea>
+        </fieldset>
 
-                <div class="custom-control custom-switch" id="toggleLabelText">
-                    <input type="checkbox" class="custom-control-input" id="toggleLabelTextCheckbox"
-                        name="toggleLabelText" onchange="toggleLabelText()" value="toggleLabelText">
-                    <label class="custom-control-label" for="toggleLabelTextCheckbox">Sync QRCode Text to Label
-                        Text</label>
-                </div>
+        <div class="custom-control custom-switch" id="toggleLabelText">
+            <input type="checkbox" class="custom-control-input" id="toggleLabelTextCheckbox" name="toggleLabelText"
+                onchange="toggleLabelText()" value="toggleLabelText">
+            <label class="custom-control-label" for="toggleLabelTextCheckbox">Sync QRCode Text to Label
+                Text</label>
+        </div>
 
-                <fieldset class="form-group" id="groupLabelText">
-                    <label for="labelText" style="margin-top: 10px; margin-bottom: 0">Label Text:</label>
-                    <textarea rows="5" id="labelText" class="form-control" onChange="preview()"
-                        onInput="preview()"></textarea>
-                </fieldset>
-                <fieldset class="form-group" id="groupLabelImage">
-                    <label style="margin-top: 10px; margin-bottom: 0">Label Image:</label>
-                    <form class="dropzone" id="my-awesome-dropzone">
-                    </form>
-                </fieldset>
+        <fieldset class="form-group" id="groupLabelText">
+            <label for="labelText" style="margin-top: 10px; margin-bottom: 0">Label Text:</label>
+            <textarea rows="5" id="labelText" class="form-control" onChange="preview()" onInput="preview()"></textarea>
+        </fieldset>
+        <fieldset class="form-group" id="groupLabelImage">
+            <label style="margin-top: 10px; margin-bottom: 0">Label Image:</label>
+            <form class="dropzone" id="my-awesome-dropzone">
+            </form>
+        </fieldset>
+    </div>
+    <div class="col-md-4">
+        <fieldset class="form-group">
+            <label for="previewImg" style="margin-bottom: 0">Label Preview:</label><br />
+            <img id="previewImg"
+                style="border: 1px solid #ced4da; max-height: 350px; width: auto; max-width: 100%; margin-bottom: 10px;" />
+            <p>Printed size w/o margins: <span id="labelWidth">?</span> cm x <span id="labelHeight">?</span> cm
+            </p>
+
+            <div class="form-group">
+                <label for="printCount" style="margin-top: 10px; margin-bottom: 0">Print Count:</label>
+                <input id="printCount" class="form-control" type="number" min="1" max="100" value="1" required>
             </div>
-            <div class="col-md-4">
-                <fieldset class="form-group">
-                    <label for="previewImg" style="margin-bottom: 0">Label Preview:</label><br />
-                    <img id="previewImg"
-                        style="border: 1px solid #ced4da; max-height: 350px; width: auto; max-width: 100%; margin-bottom: 10px;" />
-                    <p>Printed size w/o margins: <span id="labelWidth">?</span> cm x <span id="labelHeight">?</span> cm
-                    </p>
 
-                    <div class="form-group">
-                        <label for="printCount" style="margin-top: 10px; margin-bottom: 0">Print Count:</label>
-                        <input id="printCount" class="form-control" type="number" min="1" max="100" value="1" required>
-                    </div>
-
-                    <div class="btn-group btn-block">
-                        <button type="button" id="printButton" class="btn btn-block btn-primary btn-lg"
-                            onClick="print()">
-                            <span class="fas fa-print" aria-hidden="true"></span> Print
-                        </button>
-                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                            id="dropdownPrintButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            data-reference="parent">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownPrintButton">
-                            <a class="dropdown-item" href="#" onClick="print(true)">Cut only once</a>
-                        </div>
-                    </div>
-
-                </fieldset>
-                <div class="card">
-                    <div class="card-header">
-                        <span class="fas fa-terminal" aria-hidden="true" style="margin-right: 0.3em"></span> Status
-                    </div>
-                    <div id="statusPanel" class="card-body">
-                        <div id="statusBox" class="alert alert-secondary" role="alert"><span>Idle...</span></div>
-                    </div>
+            <div class="btn-group btn-block">
+                <button type="button" id="printButton" class="btn btn-block btn-primary btn-lg" onClick="print()">
+                    <span class="fas fa-print" aria-hidden="true"></span> Print
+                </button>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                    id="dropdownPrintButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    data-reference="parent">
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownPrintButton">
+                    <a class="dropdown-item" href="#" onClick="print(true)">Cut only once</a>
                 </div>
+            </div>
+
+        </fieldset>
+        <div class="card">
+            <div class="card-header">
+                <span class="fas fa-terminal" aria-hidden="true" style="margin-right: 0.3em"></span> Status
+            </div>
+            <div id="statusPanel" class="card-body">
+                <div id="statusBox" class="alert alert-secondary" role="alert"><span>Idle...</span></div>
             </div>
         </div>
-        {% endblock %}
+    </div>
+</div>
+{% endblock %}
 
-        {% block javascript %}
-        {{ super() }}
-        {% include "main.js" %}
-        {% endblock %}
+{% block javascript %}
+{{ super() }}
+{% include "main.js" %}
+{% endblock %}

@@ -181,14 +181,31 @@ def create_label_from_request(request):
         return ls['dots_printable']
 
     def get_font_path(font_family_name, font_style_name):
+        # Fallback if font_family_name is missing, empty, or invalid
+        if not font_family_name or not FONTS.fonts.get(font_family_name):
+            font_family_name = current_app.config.get('LABEL_DEFAULT_FONT_FAMILY')
+
+            # If the default is still missing or invalid, grab the first valid font
+            if not font_family_name or not FONTS.fonts.get(font_family_name):
+                valid_fonts = [f for f, styles in FONTS.fonts.items() if styles]
+                if valid_fonts:
+                    font_family_name = valid_fonts[0]
+                else:
+                    raise LookupError("No fonts available")
+
+        # Fallback if font_style_name is missing or invalid for the selected family
+        available_styles = list(FONTS.fonts.get(font_family_name, {}).keys())
+        if not font_style_name or font_style_name not in available_styles:
+            if available_styles:
+                font_style_name = 'Regular' if 'Regular' in available_styles else available_styles[0]
+            else:
+                raise LookupError("No styles available for font")
+
         try:
-            if font_family_name is None or font_style_name is None:
-                font_family_name = current_app.config['LABEL_DEFAULT_FONT_FAMILY']
-                font_style_name = current_app.config['LABEL_DEFAULT_FONT_STYLE']
             font_path = FONTS.fonts[font_family_name][font_style_name]
+            return font_path
         except KeyError:
-            raise LookupError("Couln't find the font & style")
-        return font_path
+            raise LookupError("Couldn't find the font & style")
 
     def get_uploaded_image(image):
         try:

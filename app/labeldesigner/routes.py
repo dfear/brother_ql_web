@@ -50,6 +50,30 @@ def index():
                            )
 
 
+@bp.route('/upload')
+def upload():
+    RED_SUPPORT = current_app.config['PRINTER_MODEL'] in two_color_support
+    return render_template('upload.html',
+                           font_family_names=FONTS.fontlist(),
+                           label_sizes=LABEL_SIZES,
+                           red_support=RED_SUPPORT,
+                           default_label_size=current_app.config['LABEL_DEFAULT_SIZE'],
+                           default_font_size=current_app.config['LABEL_DEFAULT_FONT_SIZE'],
+                           default_orientation=current_app.config['LABEL_DEFAULT_ORIENTATION'],
+                           default_font_alignment=current_app.config.get('LABEL_DEFAULT_FONT_ALIGNMENT', 'Left').lower(),
+                           default_qr_size=current_app.config['LABEL_DEFAULT_QR_SIZE'],
+                           default_image_mode=current_app.config['IMAGE_DEFAULT_MODE'],
+                           default_bw_threshold=current_app.config['IMAGE_DEFAULT_BW_THRESHOLD'],
+                           default_font_family=current_app.config['LABEL_DEFAULT_FONT_FAMILY'],
+                           line_spacings=LINE_SPACINGS,
+                           default_line_spacing=current_app.config['LABEL_DEFAULT_LINE_SPACING'],
+                           default_dpi=DEFAULT_DPI,
+                           default_margin_top=current_app.config['LABEL_DEFAULT_MARGIN_TOP'],
+                           default_margin_bottom=current_app.config['LABEL_DEFAULT_MARGIN_BOTTOM'],
+                           default_margin_left=current_app.config['LABEL_DEFAULT_MARGIN_LEFT'],
+                           default_margin_right=current_app.config['LABEL_DEFAULT_MARGIN_RIGHT']
+                           )
+
 @bp.route('/api/font/styles', methods=['POST', 'GET'])
 def get_font_styles():
     font = request.values.get(

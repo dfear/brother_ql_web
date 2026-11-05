@@ -73,6 +73,108 @@ def upload():
                            default_margin_right=current_app.config['LABEL_DEFAULT_MARGIN_RIGHT']
                            )
 
+@app.route('/upload/process', methods=['POST'])
+def csv_upload_process_and_print():
+    def render_index_with_error(error_msg):
+        return render_template('index.html',
+                               error=error_msg,
+                               default_col=config.DEFAULT_COLUMN_NAME_LT,
+                               default_col_qrcode=config.DEFAULT_COLUMN_NAME_QRT,
+                               default_font=config.DEFAULT_FONT_SIZE,
+                               default_copies=config.DEFAULT_COPIES,
+                               default_type=config.DEFAULT_LABEL_TYPE,
+                               default_workflow=config.DEFAULT_WORKFLOW,
+                               gsheet_cols=config.GSHEET_DEFAULT_COLUMNS)
+
+    if 'csv_file' not in request.files:
+        return render_index_with_error("No file part uploaded.")
+
+    file = request.files['csv_file']
+    if file.filename == '':
+        return render_index_with_error("No file selected.")
+
+    workflow = request.form.get('workflow', config.DEFAULT_WORKFLOW)
+    column_name_label = request.form.get('column_name_label', config.DEFAULT_COLUMN_NAME_LT)
+    column_name_qrcode = request.form.get('column_name_qrtext', config.DEFAULT_COLUMN_NAME_QRT)
+    font_size = request.form.get('font_size', config.DEFAULT_FONT_SIZE, type=int)
+    copies = request.form.get('copies', config.DEFAULT_COPIES, type=int)
+    label_type = request.form.get('label_type', config.DEFAULT_LABEL_TYPE)
+
+    label_size = config.LABEL_DEFAULT_SIZE
+    label_shape = config.LABEL_DEFAULT_SHAPE
+    label_orientation = config.LABEL_DEFAULT_ORIENTATION
+    label_print_colour = config.LABEL_DEFAULT_PRINT_COLOUR
+    label_font_family = config.LABEL_DEFAULT_FONT_FAMILY
+    label_font_style = config.LABEL_DEFAULT_FONT_STYLE
+    label_font_alignment = config.LABEL_DEFAULT_FONT_ALIGNMENT
+    label_line_spacing = config.LABEL_DEFAULT_LINE_SPACING
+    label_qr_size = config.LABEL_DEFAULT_QR_SIZE
+    label_margin_top = config.LABEL_DEFAULT_MARGIN_TOP
+    label_margin_bottom = config.LABEL_DEFAULT_MARGIN_BOTTOM
+    label_margin_left = config.LABEL_DEFAULT_MARGIN_LEFT
+    label_margin_right = config.LABEL_DEFAULT_MARGIN_RIGHT
+
+    stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
+
+    success_count = 0
+    fail_count = 0
+
+    if workflow == 'process_master':
+        csv_reader = csv.reader(stream)
+        filter_ids = [str(row[0]).strip() for row in csv_reader if row]
+
+        if not filter_ids:
+            return render_index_with_error("Uploaded CSV is empty.")
+
+        try:
+            inventory_data = get_inventory_data()
+        except Exception as e:
+            return render_index_with_error(f"Error communicating with Google Sheets API: {str(e)}")
+
+        filtered_df = process_label_data(inventory_data, filter_ids)
+
+        if filtered_df.empty:
+            return render_index_with_error("No matching inventory IDs were found in the Google Sheet.")
+
+        for index, row in filtered_df.iterrows():
+            label_text = row.get(column_name_label)
+            qr_text = row.get(column_name_qrcode)
+
+            if debug_mode:
+                 print(f"Processing row {index}: label_text='{label_text}', qr_text='{qr_text}'")  # Debugging output
+                 sys.exit(0)  # Stop after first row for debugging
+
+            if pd.notna(label_text) and str(label_text).strip() != "":
+                if send_to_printer(str(label_text), str(qr_text), font_size, copies, label_type, label_size, label_shape, label_orientation, label_print_colour, label_font_family, label_font_style, label_font_alignment, label_line_spacing, label_qr_size, label_margin_top, label_margin_bottom, label_margin_left, label_margin_right):
+                    success_count += 1
+                else:
+                    fail_count += 1
+            else:
+                fail_count += 1
+
+    elif workflow == 'direct_print':
+        csv_reader = csv.DictReader(stream)
+
+        if not csv_reader.fieldnames or column_name_label not in csv_reader.fieldnames or column_name_qrcode not in csv_reader.fieldnames:
+             return render_index_with_error(f"Column '{column_name_label}' or '{column_name_qrcode}' not found in the uploaded CSV. Available columns: {', '.join(csv_reader.fieldnames or ['None'])}")
+
+        for row in csv_reader:
+            label_text = row.get(column_name_label)
+            qr_text = row.get(column_name_qrcode)
+
+            #print(f"Processing row: label_text='{label_text}', qr_text='{qr_text}'")  # Debugging output
+            #sys.exit(0)  # Stop after first row for debugging
+
+            if label_text or qr_text and str(label_text).strip() != "" or str(qr_text).strip() != "":
+                if send_to_printer(str(label_text), str(qr_text), font_size, copies, label_type, label_size, label_shape, label_orientation, label_print_colour, label_font_family, label_font_style, label_font_alignment, label_line_spacing, label_qr_size, label_margin_top, label_margin_bottom, label_margin_left, label_margin_right):
+                    success_count += 1
+                else:
+                    fail_count += 1
+            else:
+                fail_count += 1
+
+    return render_template('result.html', success_count=success_count, fail_count=fail_count)
+
 @bp.route('/api/font/styles', methods=['POST', 'GET'])
 def get_font_styles():
     font = request.values.get(

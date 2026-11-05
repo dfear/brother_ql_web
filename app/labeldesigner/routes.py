@@ -1,6 +1,6 @@
 import os
 
-from flask import current_app, render_template, request, make_response
+from flask import current_app, render_template, request, make_response, flash
 
 from brother_ql.devicedependent import label_type_specs, label_sizes, two_color_support
 from brother_ql.devicedependent import ENDLESS_LABEL, DIE_CUT_LABEL, ROUND_DIE_CUT_LABEL

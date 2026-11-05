@@ -78,12 +78,12 @@ def csv_upload_process_and_print():
     def render_index_with_error(error_msg):
         return render_template('index.html',
                                error=error_msg,
-                               default_col=config.DEFAULT_COLUMN_NAME_LT,
-                               default_col_qrcode=config.DEFAULT_COLUMN_NAME_QRT,
-                               default_font=config.DEFAULT_FONT_SIZE,
-                               default_copies=config.DEFAULT_COPIES,
-                               default_type=config.DEFAULT_LABEL_TYPE,
-                               default_workflow=config.DEFAULT_WORKFLOW,
+                               default_col=config.CSV_UPLOAD_DEFAULT_COLUMN_NAME_LT,
+                               default_col_qrcode=config.CSV_UPLOAD_DEFAULT_COLUMN_NAME_QRT,
+                               default_font=config.CSV_UPLOAD_DEFAULT_FONT_SIZE,
+                               default_copies=config.CSV_UPLOAD_DEFAULT_COPIES,
+                               default_type=config.CSV_UPLOAD_DEFAULT_LABEL_TYPE,
+                               default_workflow=config.CSV_UPLOAD_DEFAULT_WORKFLOW,
                                gsheet_cols=config.GSHEET_DEFAULT_COLUMNS)
 
     if 'csv_file' not in request.files:

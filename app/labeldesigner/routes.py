@@ -175,7 +175,7 @@ def csv_upload_process_and_print():
             else:
                 fail_count += 1
 
-    return render_template('result.html', success_count=success_count, fail_count=fail_count)
+    return render_template('upload_result.html', success_count=success_count, fail_count=fail_count)
 
 @bp.route('/api/font/styles', methods=['POST', 'GET'])
 def get_font_styles():

@@ -93,12 +93,12 @@ def csv_upload_process_and_print():
     if file.filename == '':
         return render_index_with_error("No file selected.")
 
-    workflow = request.form.get('workflow', config.DEFAULT_WORKFLOW)
-    column_name_label = request.form.get('column_name_label', config.DEFAULT_COLUMN_NAME_LT)
-    column_name_qrcode = request.form.get('column_name_qrtext', config.DEFAULT_COLUMN_NAME_QRT)
-    font_size = request.form.get('font_size', config.DEFAULT_FONT_SIZE, type=int)
-    copies = request.form.get('copies', config.DEFAULT_COPIES, type=int)
-    label_type = request.form.get('label_type', config.DEFAULT_LABEL_TYPE)
+    workflow = request.form.get('workflow', config.CSV_UPLOAD_DDEFAULT_WORKFLOW)
+    column_name_label = request.form.get('column_name_label', config.CSV_UPLOAD_DDEFAULT_COLUMN_NAME_LT)
+    column_name_qrcode = request.form.get('column_name_qrtext', config.CSV_UPLOAD_DDEFAULT_COLUMN_NAME_QRT)
+    font_size = request.form.get('font_size', config.CSV_UPLOAD_DDEFAULT_FONT_SIZE, type=int)
+    copies = request.form.get('copies', config.CSV_UPLOAD_DDEFAULT_COPIES, type=int)
+    label_type = request.form.get('label_type', config.CSV_UPLOAD_DDEFAULT_LABEL_TYPE)
 
     label_size = config.LABEL_DEFAULT_SIZE
     label_shape = config.LABEL_DEFAULT_SHAPE

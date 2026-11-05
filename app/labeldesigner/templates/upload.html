@@ -2,11 +2,65 @@
 
 {% block app_content %}
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
+        <h2>Print Inventory Labels</h2>
 
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
 
+        <form action="/process" method="POST" enctype="multipart/form-data" id="printForm">
+
+            <div class="form-section" id="step1">
+                <h3 class="step-title">Step 1: Load Data</h3>
+                <label for="workflow">Processing Workflow:</label>
+                <select name="workflow" id="workflow">
+                    <option value="process_master" {% if default_workflow=='process_master' %}selected{% endif %}>Option
+                        1:
+                        Merge CSV IDs with Google Sheets Data</option>
+                    <option value="direct_print" {% if default_workflow=='direct_print' %}selected{% endif %}>Option 2:
+                        Direct Print from CSV file</option>
+                </select>
+
+                <label for="csvFile">Upload CSV File:</label>
+                <input type="file" name="csv_file" id="csvFile" accept=".csv">
+
+                <button type="button" class="btn-process" id="btnProcessCsv">Upload & Process CSV</button>
+            </div>
+
+            <div class="form-section" id="step2">
+                <h3 class="step-title">Step 2: Print Settings</h3>
+                <p style="color: #28a745; font-size: 0.9em; margin-top: 0;">✓ CSV Processed Successfully</p>
+
+                <label for="columnNameQRText">Column for QR Text:</label>
+                <select name="column_name_qrtext" id="columnNameQRText">
+                </select>
+
+                <label for="columnNameLabelText">Column for label text:</label>
+                <select name="column_name_label" id="columnNameLabelText" required>
+                </select>
+
+                <label for="fontSize">Font Size:</label>
+                <input type="number" name="font_size" id="fontSize" value="{{ default_font }}" required>
+
+                <label for="copies">Copies per label:</label>
+                <input type="number" name="copies" id="copies" value="{{ default_copies }}" required>
+
+                <label for="labelType">Label Type:</label>
+                <select name="label_type" id="labelType">
+                    <option value="text" {% if default_type=='text' %}selected{% endif %}>Text</option>
+                    <option value="qrcode" {% if default_type=='qrcode' %}selected{% endif %}>QR Code</option>
+                    <option value="qrcode_text" {% if default_type=='qrcode_text' %}selected{% endif %}>QR Code + Text
+                    </option>
+                    <option value="image" {% if default_type=='image' %}selected{% endif %}>Image</option>
+                </select>
+
+                <button type="submit" class="btn-print" id="btnPrint">Print Labels</button>
+            </div>
+        </form>
     </div>
 </div>
+
 {% endblock %}
 
 {% block javascript %}

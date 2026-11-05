@@ -1,0 +1,98 @@
+body_upload {
+  font-family: Arial, sans-serif;
+  margin: 40px;
+  background-color: #f4f4f9;
+}
+
+body {
+  background-color: #f4f4f9;
+}
+
+/* this messes up the layout if "_upload" is removed fromt the rule name. */
+.container_upload {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h2_upload {
+  margin-top: 0;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.error_upload {
+  color: #d9534f;
+  background-color: #fdf7f7;
+  padding: 10px;
+  border: 1px solid #d9534f;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+label_upload {
+  font-weight: bold;
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="file"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.btn-process {
+  background-color: #007bff;
+}
+
+.btn-process:hover {
+  background-color: #0056b3;
+}
+
+.btn-print {
+  background-color: #28a745;
+}
+
+.btn-print:hover {
+  background-color: #218838;
+}
+
+.form-section {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #e9ecef;
+}
+
+.step-title {
+  margin-top: 0;
+  color: #555;
+  font-size: 1.1em;
+}
+
+#step2 {
+  display: none;
+}

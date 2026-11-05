@@ -12,6 +12,8 @@ from app import FONTS
 from .label import SimpleLabel, LabelContent, LabelOrientation, LabelType
 from .printer import PrinterQueue
 
+from .upload_processor import process_direct_print, process_master_inventory
+
 LINE_SPACINGS = (100, 150, 200, 250, 300)
 
 # Don't change as brother_ql is using this DPI value

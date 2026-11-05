@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div class="row">
+    <div class="col-md-6">
+        <h2>Processing Complete</h2>
+
+        <div class="stats">
+            <p><strong>Successfully printed:</strong> <span class="success">{{ success_count }} labels</span></p>
+            <p><strong>Failed or skipped:</strong> <span class="error">{{ fail_count }} labels</span></p>
+        </div>
+
+        <a href="/upload" class="button">Print More Labels</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+{{ super() }}
+{% include "main.js" %}
+{% endblock %}

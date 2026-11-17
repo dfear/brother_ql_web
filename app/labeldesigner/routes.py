@@ -76,7 +76,7 @@ def upload():
                            default_margin_right=current_app.config['LABEL_DEFAULT_MARGIN_RIGHT']
                            )
 
-@app.route('/upload/process', methods=['POST'])
+@bp.route('/upload/process', methods=['POST'])
 def csv_upload_process_and_print():
     def render_index_with_error(error_msg):
         return render_template('index.html',

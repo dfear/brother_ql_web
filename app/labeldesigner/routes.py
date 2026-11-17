@@ -111,19 +111,19 @@ def csv_upload_process_and_print():
     copies = request.form.get('copies', current_app.config['CSV_UPLOAD_DEFAULT_COPIES'], type=int)
     label_type = request.form.get('label_type', current_app.config['CSV_UPLOAD_DEFAULT_LABEL_TYPE'])
 
-    label_size = config.LABEL_DEFAULT_SIZE
-    label_shape = config.LABEL_DEFAULT_SHAPE
-    label_orientation = config.LABEL_DEFAULT_ORIENTATION
-    label_print_colour = config.LABEL_DEFAULT_PRINT_COLOUR
-    label_font_family = config.LABEL_DEFAULT_FONT_FAMILY
-    label_font_style = config.LABEL_DEFAULT_FONT_STYLE
-    label_font_alignment = config.LABEL_DEFAULT_FONT_ALIGNMENT
-    label_line_spacing = config.LABEL_DEFAULT_LINE_SPACING
-    label_qr_size = config.LABEL_DEFAULT_QR_SIZE
-    label_margin_top = config.LABEL_DEFAULT_MARGIN_TOP
-    label_margin_bottom = config.LABEL_DEFAULT_MARGIN_BOTTOM
-    label_margin_left = config.LABEL_DEFAULT_MARGIN_LEFT
-    label_margin_right = config.LABEL_DEFAULT_MARGIN_RIGHT
+    label_size = current_app.config['LABEL_DEFAULT_SIZE']
+    label_shape = current_app.config['LABEL_DEFAULT_SHAPE']
+    label_orientation = current_app.config['LABEL_DEFAULT_ORIENTATION']
+    label_print_colour = current_app.config['LABEL_DEFAULT_PRINT_COLOUR']
+    label_font_family = current_app.config['LABEL_DEFAULT_FONT_FAMILY']
+    label_font_style = current_app.config['LABEL_DEFAULT_FONT_STYLE']
+    label_font_alignment = current_app.config['LABEL_DEFAULT_FONT_ALIGNMENT']
+    label_line_spacing = current_app.config['LABEL_DEFAULT_LINE_SPACING']
+    label_qr_size = current_app.config['LABEL_DEFAULT_QR_SIZE']
+    label_margin_top = current_app.config['LABEL_DEFAULT_MARGIN_TOP']
+    label_margin_bottom = current_app.config['LABEL_DEFAULT_MARGIN_BOTTOM']
+    label_margin_left = current_app.config['LABEL_DEFAULT_MARGIN_LEFT']
+    label_margin_right = current_app.config['LABEL_DEFAULT_MARGIN_RIGHT']
 
     stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
 

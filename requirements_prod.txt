@@ -1,6 +1,7 @@
 brother_ql
 Flask
 flask_bootstrap4
+gspread
 qrcode
 pdf2image
 Pillow==10.*

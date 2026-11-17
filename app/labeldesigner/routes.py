@@ -130,6 +130,8 @@ def csv_upload_process_and_print():
 
     stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
 
+    # START MOVE to app/labeldesigner/upload_processor.py
+
     success_count = 0
     fail_count = 0
 
@@ -186,6 +188,24 @@ def csv_upload_process_and_print():
                     fail_count += 1
             else:
                 fail_count += 1
+
+    # END MOVE
+
+    # Route to the external logic functions
+    try:
+        if workflow == 'process_master':
+            success_count, fail_count = process_master_inventory(
+                stream, column_name_label, column_name_qrcode, font_size, copies, label_type, **label_config
+            )
+        elif workflow == 'direct_print':
+            success_count, fail_count = process_direct_print(
+                stream, column_name_label, column_name_qrcode, font_size, copies, label_type, **label_config
+            )
+        else:
+            return render_index_with_error("Invalid workflow selected.")
+
+    except Exception as ex:
+        return render_index_with_error(str(ex))
 
     return render_template('upload_result.html', success_count=success_count, fail_count=fail_count)
 

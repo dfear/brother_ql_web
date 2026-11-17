@@ -3,6 +3,7 @@ Flask
 flask_bootstrap4
 gspread
 qrcode
+pandas
 pdf2image
 Pillow==10.*
 requests

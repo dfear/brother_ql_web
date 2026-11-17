@@ -10,7 +10,7 @@
             <p><strong>Failed or skipped:</strong> <span class="error">{{ fail_count }} labels</span></p>
         </div>
 
-        <a href="/upload" class="button">Print More Labels</a>
+        <a href="{{ url_for('labeldesigner.upload') }}" class="button">Print More Labels</a>
     </div>
 </div>
 

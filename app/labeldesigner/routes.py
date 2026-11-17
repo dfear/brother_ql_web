@@ -73,7 +73,14 @@ def upload():
                            default_margin_top=current_app.config['LABEL_DEFAULT_MARGIN_TOP'],
                            default_margin_bottom=current_app.config['LABEL_DEFAULT_MARGIN_BOTTOM'],
                            default_margin_left=current_app.config['LABEL_DEFAULT_MARGIN_LEFT'],
-                           default_margin_right=current_app.config['LABEL_DEFAULT_MARGIN_RIGHT']
+                           default_margin_right=current_app.config['LABEL_DEFAULT_MARGIN_RIGHT'],
+                           default_col=current_app.config['CSV_UPLOAD_DEFAULT_COLUMN_NAME_LT'],
+                           default_col_qrcode=current_app.config['CSV_UPLOAD_DEFAULT_COLUMN_NAME_QRT'],
+                           default_font=current_app.config['CSV_UPLOAD_DEFAULT_FONT_SIZE'],
+                           default_copies=current_app.config['CSV_UPLOAD_DEFAULT_COPIES'],
+                           default_type=current_app.config['CSV_UPLOAD_DEFAULT_LABEL_TYPE'],
+                           default_workflow=current_app.config['CSV_UPLOAD_DEFAULT_WORKFLOW'],
+                           gsheet_cols=current_app.config['GSHEET_DEFAULT_COLUMNS']
                            )
 
 @bp.route('/upload/process', methods=['POST'])
@@ -81,13 +88,14 @@ def csv_upload_process_and_print():
     def render_index_with_error(error_msg):
         return render_template('index.html',
                                error=error_msg,
-                               default_col=config.CSV_UPLOAD_DEFAULT_COLUMN_NAME_LT,
-                               default_col_qrcode=config.CSV_UPLOAD_DEFAULT_COLUMN_NAME_QRT,
-                               default_font=config.CSV_UPLOAD_DEFAULT_FONT_SIZE,
-                               default_copies=config.CSV_UPLOAD_DEFAULT_COPIES,
-                               default_type=config.CSV_UPLOAD_DEFAULT_LABEL_TYPE,
-                               default_workflow=config.CSV_UPLOAD_DEFAULT_WORKFLOW,
-                               gsheet_cols=config.GSHEET_DEFAULT_COLUMNS)
+                               default_col=current_app.config['CSV_UPLOAD_DEFAULT_COLUMN_NAME_LT'],
+                               default_col_qrcode=current_app.config['CSV_UPLOAD_DEFAULT_COLUMN_NAME_QRT'],
+                               default_font=current_app.config['CSV_UPLOAD_DEFAULT_FONT_SIZE'],
+                               default_copies=current_app.config['CSV_UPLOAD_DEFAULT_COPIES'],
+                               default_type=current_app.config['CSV_UPLOAD_DEFAULT_LABEL_TYPE'],
+                               default_workflow=current_app.config['CSV_UPLOAD_DEFAULT_WORKFLOW'],
+                               gsheet_cols=current_app.config['GSHEET_DEFAULT_COLUMNS']
+                           )
 
     if 'csv_file' not in request.files:
         return render_index_with_error("No file part uploaded.")
